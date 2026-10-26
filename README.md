@@ -1,5 +1,7 @@
 # Model Filter
 
+[![CI](https://github.com/werserk/bb-plugin-model-filter/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/werserk/bb-plugin-model-filter/actions/workflows/ci.yml)
+
 Choose which models appear in BB's standard model pickers while keeping each picker's current model available.
 
 Open **Settings → Installed plugins → Model Filter** to edit a provider's model list. Providers start in **All models** mode. In **Selected models** mode, new model IDs stay hidden until you select them. A hidden model that is already current remains available to that picker, marked **(Current)**, with its native reasoning and session metadata.
@@ -18,9 +20,17 @@ Settings, storage, catalog reads, RPC, and realtime use the public Plugin SDK. N
 
 If the adapter cannot identify a compatible query client, BB's full native choices remain available and the settings page reports that filtering is inactive. Recheck the native picker and restoration behavior after updating BB. See [compatibility evidence and remaining checks](docs/compatibility.md).
 
-## Local installation
+## Installation
 
-This checkout is prepared for private local use; no public release is published. Use a supported Node.js version for BB 0.47.1: Node 22.19+, 24, or 26.
+This is a private review repository. GitHub access is required; no npm release or Community marketplace listing is published. Use a supported Node.js version for BB 0.47.1: Node 22.19+, 24, or 26.
+
+Install from the repository with authenticated Git access on the BB server:
+
+```bash
+bb plugin install git:https://github.com/werserk/bb-plugin-model-filter.git@main
+```
+
+For a local development checkout, follow the steps below.
 
 Install the locked dependencies:
 
@@ -119,3 +129,7 @@ npm run build
 CI runs these checks against the lockfile. The SDK scanner checks source imports and declared dependencies; passing it does not make the private React/TanStack adapter a supported public hook. Live verification must cover native menus, current-model exceptions, raw cached catalogs, multiple clients, and disable/reload restoration.
 
 See [architecture](docs/ARCHITECTURE.md), [implementation and acceptance](docs/implementation.md), and [changelog](CHANGELOG.md). Runtime-shimmed React and UI utility packages stay in development dependencies; bundled code depends on Zod and the non-portaling Radix Slot primitive. The vendored Button and Input retain their local source.
+
+## Repository and license
+
+The primary branch is `main`. Pull requests and pushes run the checks defined in [.github/workflows/ci.yml](.github/workflows/ci.yml). The private repository is available for owner review; it has no open-source license. See [LICENSE](LICENSE).

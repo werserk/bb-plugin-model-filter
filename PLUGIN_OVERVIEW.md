@@ -10,4 +10,4 @@ The `bb model-filter` CLI reads and changes the same server-stored preferences. 
 
 The integration target is BB 0.47.1 with Plugin SDK 0.6.79. Native filtering uses a version-scoped private React/TanStack runtime adapter in addition to public SDK features. If that adapter is unavailable, native choices remain usable and Settings reports filtering as inactive. BB updates require renewed compatibility checks.
 
-Prepared for private local use. No public release has been published.
+Available in a private review repository. No public release has been published.

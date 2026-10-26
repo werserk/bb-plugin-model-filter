@@ -48,5 +48,6 @@
     "Electron app separately"
   ],
   "publication": "not authorized or attempted",
-  "dependencyNote": "npm install reported13 vulnerabilities in the development/toolchain dependency tree; unrelated upgrades were not applied. Production dependency audit reports0."
+  "dependencyNote": "npm install reported13 vulnerabilities in the development/toolchain dependency tree; unrelated upgrades were not applied. Production dependency audit reports0.",
+  "scope": "Initial local implementation acceptance. Current repository CI is reported by GitHub Actions."
 }

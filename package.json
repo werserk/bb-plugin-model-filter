@@ -8,7 +8,7 @@
   },
   "bb": {
     "name": "Model Filter",
-    "description": "Show only the models you choose in BB’s standard model pickers.",
+    "description": "Show only the models you choose in BB\u2019s standard model pickers.",
     "branding": {
       "icon": "./assets/icon.svg"
     },
@@ -73,5 +73,9 @@
     "LICENSE",
     "CHANGELOG.md",
     "PLUGIN_OVERVIEW.md"
-  ]
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/werserk/bb-plugin-model-filter.git"
+  }
 }

@@ -1,6 +1,6 @@
 # Product contract
 
-Status: the owner authorized design and implementation on 2026-10-26. Local installation is in scope; public publication is not authorized.
+Status: the owner authorized design and implementation on 2026-10-26. Local installation and creation of a private GitHub review repository are authorized. Public release and marketplace submission remain outside scope.
 
 ## Accepted behavior
 

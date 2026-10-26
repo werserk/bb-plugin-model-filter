@@ -34,3 +34,7 @@ This relies on private runtime behavior and is confined to BB 0.47.x, tested on 
 ## Storage and synchronization
 
 Only {revision, providers} is persisted in the plugin's server SQLite database. Saves validate a full routed catalog on the server and perform a final atomic revision check after asynchronous discovery. Post-commit realtime invalidation makes clients fetch the new snapshot; reconnect performs the same fetch. There is no new server or credential setting. All mode and resets avoid catalog dependence.
+
+## Repository distribution
+
+package.json records the private Git source; README.md owns authenticated Git installation and owner-review instructions. main is the primary branch. .github/workflows/ci.yml validates pushes and pull requests. Repository creation does not change the runtime, installed local source or preference database.
