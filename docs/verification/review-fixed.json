@@ -1,0 +1,131 @@
+{
+  "reviewer": "/root/final_review",
+  "review_skill_file": "/home/werserk/.agents/skills/change-review/SKILL.md",
+  "verdict": "PASS",
+  "subject": {
+    "kind": "staged initial tree after F01 correction",
+    "tree": "9943f416b80631523907f9597888a8c2d8a989d5",
+    "branch": "feat/model-filter",
+    "source_unchanged_by_reviewer": true
+  },
+  "prior_review": {
+    "tree": "d7cd216e5effdda6d4b55594fa16c4d4fe11ba05",
+    "verdict": "BLOCKED",
+    "report": "/tmp/model-filter-final-review.json",
+    "open_obligation": "F01"
+  },
+  "scope": "Bounded re-review of the complete ten-file delta from the prior reviewed tree, F01 reproduction and required legitimate routed/offline flows. Unchanged surfaces retain the original complete review.",
+  "summary": "F01 is fixed: draft ownership is explicit, automatic provider changes load the newly displayed provider rule even if the previous provider draft was dirty, and Apply cannot submit during an ownership mismatch. Both the original independent reproducer and committed regression pass; legitimate routed editing and offline All mode remain functional.",
+  "findings": [],
+  "obligations": [
+    {
+      "id": "F01",
+      "status": "fixed",
+      "evidence": [
+        "settings-state.ts: draftProviderId records ownership; provider synchronization only preserves a dirty draft belonging to the current provider.",
+        "settings-state.ts: apply guards draftProviderId === providerId; activeProvider scopes asynchronous mutation responses to the displayed editor.",
+        "ModelCatalogEditor.tsx: Apply disabled while editorReady is false.",
+        "ModelFilterSettings.test.tsx: pending provider discovery / All draft / automatic provider replacement no longer issues a save; subsequent selection of Beta saves under the new provider and host-new routing.",
+        "ModelFilterSettings.test.tsx: All mode remains usable when model catalog discovery fails.",
+        "The independent original /tmp probe now passes against the actual corrected component."
+      ]
+    }
+  ],
+  "intent_scope": [
+    {
+      "item": 1,
+      "name": "Intent alignment",
+      "status": "PASS",
+      "note": "Original accepted product behavior retained; fix prevents saving a rule to the wrong provider."
+    },
+    {
+      "item": 2,
+      "name": "Forgotten touchpoints",
+      "status": "PASS",
+      "note": "State owner, Apply UI, regression tests, architecture record and implementation correction changed together."
+    },
+    {
+      "item": 3,
+      "name": "Cross-surface consistency",
+      "status": "PASS",
+      "note": "Changed docs match owner-bound drafts and added live capture evidence."
+    },
+    {
+      "item": 4,
+      "name": "Regression surface",
+      "status": "PASS",
+      "note": "Named race reproduced red before correction and green afterward; ordinary routed editing and offline All remain covered."
+    },
+    {
+      "item": 5,
+      "name": "Prompt and doc sync",
+      "status": "PASS",
+      "note": "No new CLI/prompt contract; implementation record retains prior blocked subject and explains its correction."
+    },
+    {
+      "item": 6,
+      "name": "Architecture fit",
+      "status": "PASS",
+      "note": "Explicit state ownership resolves the root cause without narrowing provider/routing capabilities."
+    },
+    {
+      "item": 7,
+      "name": "Cross-module bugs",
+      "status": "PASS",
+      "note": "Provider discovery and draft synchronization now agree on draft identity, and Apply enforces that identity."
+    },
+    {
+      "item": 8,
+      "name": "Implicit contracts",
+      "status": "PASS",
+      "note": "RPC, storage, runtime adapter and native picker contracts unchanged from the original reviewed tree."
+    }
+  ],
+  "checks": [
+    {
+      "classification": "checked",
+      "command": "vitest run ModelFilterSettings.test.tsx --reporter=json --outputFile=/tmp/model-filter-fix-review-tests.json",
+      "exit": 0,
+      "result": "5/5 passed"
+    },
+    {
+      "classification": "checked",
+      "command": "vitest run route.test.tsx --root /tmp/model-filter-review-probe --testNamePattern=\"never applies\" --reporter=json --outputFile=/tmp/model-filter-original-probe-fixed.json",
+      "exit": 0,
+      "result": "Original independent race probe: 1 targeted test passed, 3 copied tests intentionally skipped"
+    },
+    {
+      "classification": "checked",
+      "artifact": "/tmp/model-filter-route-red.json",
+      "result": "Committed regression failed before correction with the exact wrong-provider save"
+    },
+    {
+      "classification": "checked",
+      "artifact": "/tmp/model-filter-route-green.json",
+      "result": "5/5 settings tests passed after correction"
+    },
+    {
+      "classification": "checked",
+      "artifact": "/tmp/model-filter-tests.json",
+      "result": "Fresh full candidate report: 45/45 passed"
+    },
+    {
+      "classification": "checked",
+      "command": "git diff --check --cached && git write-tree",
+      "exit": 0,
+      "result": "No whitespace errors; candidate identity matches supplied tree"
+    },
+    {
+      "classification": "checked",
+      "artifact": "docs/verification/checks.json",
+      "result": "Receipt records fresh typecheck, formatter, SDK scan and build passes; remote CI is explicitly not run"
+    },
+    {
+      "classification": "checked",
+      "artifact": "docs/verification/{claude-live,keyboard-live,restored-draft}.json",
+      "result": "All three exactly match the previously inspected parent live captures"
+    }
+  ],
+  "evidence_limits": "This reviewer reran the settings tests and original independent regression, inspected the full-suite report and new receipts, and did not rerun the live browser or every unchanged build gate. The original report records unchanged native-boundary analysis and remaining physical mobile/full-server/remote CI gaps. No files omitted from this delta review.",
+  "post_review_additions": "Copying these review receipts into docs/verification is an evidence-only addition outside the identified reviewed tree. Preserve both reviewed tree IDs and verify the final commit records the source candidate plus receipts."
+}

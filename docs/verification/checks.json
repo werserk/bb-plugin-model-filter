@@ -1,0 +1,52 @@
+{
+  "checkedOn": "2026-10-26",
+  "bb": "0.47.1",
+  "sdk": "0.6.79",
+  "commands": [
+    {
+      "command": "npm run format:check",
+      "exitCode": 0
+    },
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0
+    },
+    {
+      "command": "npm run check:sdk",
+      "exitCode": 0,
+      "result": "Public SDK scan passed (22 source files)."
+    },
+    {
+      "command": "npm test -- --reporter=json --outputFile=/tmp/model-filter-tests.json",
+      "exitCode": 0,
+      "passed": 45,
+      "failed": 0
+    },
+    {
+      "command": "npm run build",
+      "exitCode": 0,
+      "warning": "Node DEP0205 module.register deprecation in BB build tooling"
+    },
+    {
+      "command": "bb model-filter status --json",
+      "exitCode": 0,
+      "result": {
+        "revision": 6,
+        "providers": {}
+      }
+    },
+    {
+      "command": "npm audit --omit=dev --json",
+      "exitCode": 0,
+      "vulnerabilities": 0
+    }
+  ],
+  "notRun": [
+    "remote CI",
+    "full BB server restart",
+    "physical mobile clients",
+    "Electron app separately"
+  ],
+  "publication": "not authorized or attempted",
+  "dependencyNote": "npm install reported13 vulnerabilities in the development/toolchain dependency tree; unrelated upgrades were not applied. Production dependency audit reports0."
+}

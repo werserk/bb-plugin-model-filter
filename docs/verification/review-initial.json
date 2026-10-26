@@ -1,0 +1,147 @@
+{
+  "reviewer": "/root/final_review",
+  "review_skill_file": "/home/werserk/.agents/skills/change-review/SKILL.md",
+  "subject": {
+    "kind": "staged initial tree",
+    "tree": "d7cd216e5effdda6d4b55594fa16c4d4fe11ba05",
+    "branch": "feat/model-filter",
+    "files": 44,
+    "source_unchanged_by_reviewer": true
+  },
+  "verdict": "BLOCKED",
+  "summary": "The standalone plugin implements the accepted native-picker projection, shared durable settings and local-current exception without editing BB files. One reproduced routed-discovery race can submit one provider's draft as a different provider's preference and must be fixed before commit.",
+  "coverage": {
+    "checked": [
+      "Read all staged authored source, contracts, tests, CLI skill, documentation, CI/config and assets; viewed both screenshots.",
+      "Parsed every package-lock entry, compared all root manifest fields, checked registry origins and install-script declarations: 419 entries; no manifest drift or non-registry origins.",
+      "Read native system query, model-catalog resolver, model picker/cycling and hosted SDK picker consumers; read relevant installed TanStack and SDK implementation.",
+      "Read staged live captures and additional parent-supplied Claude, keyboard cycling and restored-draft captures.",
+      "Reran candidate tests: 43 passed; typecheck, SDK scan (22 files), formatter and staged diff check passed.",
+      "Ran an isolated /tmp regression probe against the actual candidate component; it reproduced the wrong-provider save. No candidate or live settings were changed."
+    ],
+    "inferred": [
+      "Installed browser observations were supplied by the implementing parent and inspected as captures; this reviewer did not independently control the live browser.",
+      "Desktop Electron, physical mobile and full-server restart coverage follows shared frontend/server contracts and is not a separately observed live pass."
+    ],
+    "missing": [
+      "Remote CI execution, physical-mobile run, full BB-server restart and live network-outage test remain explicitly unverified in compatibility.md."
+    ],
+    "omissions": "No staged file omitted. Large lockfile was reviewed by complete semantic parsing rather than raw line-by-line dumping. External native-source review was focused on touched consumers and contracts."
+  },
+  "intent_scope": [
+    {
+      "item": 1,
+      "name": "Intent alignment",
+      "status": "PASS",
+      "evidence": "Native execution-options observer projection reduces original menus; settings persist by canonical provider/model IDs; hidden current metadata remains picker-local."
+    },
+    {
+      "item": 2,
+      "name": "Forgotten touchpoints",
+      "status": "PASS",
+      "evidence": "RPC schemas, server and SQLite store, CLI reader/writer, realtime frontend store, lifecycle, settings editor, native resolver dependencies, docs and tests are included. F01 identifies an implementation race within these covered touchpoints."
+    },
+    {
+      "item": 3,
+      "name": "Cross-surface consistency",
+      "status": "PASS",
+      "evidence": "README/spec/architecture accurately distinguish one plugin, independent BB servers, unconfigured-provider behavior, private version-scoped integration and fail-open presentation."
+    },
+    {
+      "item": 4,
+      "name": "Regression surface",
+      "status": "FAIL",
+      "finding": "F01",
+      "evidence": "Asynchronous provider discovery changes the active provider while preserving an in-progress draft from the previous provider."
+    },
+    {
+      "item": 5,
+      "name": "Prompt and doc sync",
+      "status": "PASS",
+      "evidence": "CLI skill uses opaque IDs and revision-aware workflow. Previous source-extension assumption is explicitly historical; deferred custom empty state and unverified compatibility surfaces are disclosed."
+    },
+    {
+      "item": 6,
+      "name": "Architecture fit",
+      "status": "PASS",
+      "evidence": "Provider-neutral query projection addresses standard, ACP and hosted pickers through their shared data path. Private adapter risk is isolated, version-bounded and accepted rather than hidden."
+    },
+    {
+      "item": 7,
+      "name": "Cross-module bugs",
+      "status": "FAIL",
+      "finding": "F01",
+      "evidence": "useCatalogSources setProviderId callback and useModelFilterSettings dirty-draft preservation disagree about the owner of draft/baseline; Apply serializes the newly active provider with the old draft."
+    },
+    {
+      "item": 8,
+      "name": "Implicit contracts",
+      "status": "PASS",
+      "evidence": "Raw SDK and cache values stay intact; metadata is preserved for native current resolution; exact query-key targeting, select composition, placeholder invalidation and owned cleanup match the inspected consumers. SQLite CAS and strict RPC validation preserve the saved snapshot protocol."
+    }
+  ],
+  "findings": [
+    {
+      "id": "F01",
+      "severity": "critical",
+      "priority": "medium",
+      "status": "open",
+      "title": "Bind drafts to the provider while routed provider discovery is pending",
+      "file": "settings-state.ts",
+      "line": 78,
+      "related": [
+        {
+          "file": "settings-state.ts",
+          "line": 185
+        },
+        {
+          "file": "settings-state.ts",
+          "line": 207
+        },
+        {
+          "file": "ModelCatalogEditor.tsx",
+          "line": 113
+        }
+      ],
+      "detail": "Catalog-source changes launch sdk.providers.list asynchronously while the old provider remains displayed. All models remains editable. If the routed result excludes that provider, setProviderId selects the first different provider. Because dirty is true, the draft synchronization effect returns early and retains the old provider's rule. Apply then saves that retained rule under the new provider ID. The server accepts All mode without catalog validation, so this can persist the wrong provider configuration.",
+      "reproduction": "Start with provider custom selected[a]. Change Machine to host-new and defer providers.list. Click All models while custom is still shown. Resolve the list to only other-provider, then Apply. The real component calls saveProvider with providerId other-provider and rule {mode:all,modelIds:[a]}.",
+      "evidence": {
+        "test": "/tmp/model-filter-review-probe/route.test.tsx",
+        "report": "/tmp/model-filter-route-review.json",
+        "target_test": "never applies a draft to a different provider after async routed discovery",
+        "result": "Failed: observed wrong-provider save; other copied tests skipped in this targeted run."
+      },
+      "remedy": "Keep an explicit provider identity for drafts or prevent editing/submitting until routed provider discovery settles. An automatic provider change must load the newly selected provider's saved rule and must not silently transfer a dirty draft.",
+      "legitimate_flow_to_preserve": "After routed discovery completes, the user must still configure the selected provider, and All/reset must remain usable without successful model-catalog discovery.",
+      "threshold": {
+        "exact_live_artifact": true,
+        "artifact_in_candidate": true,
+        "fix_belongs_in_this_change": true,
+        "legitimate_flow_named": true
+      }
+    }
+  ],
+  "checks": [
+    {
+      "command": "npm test -- --reporter=json --outputFile=/tmp/model-filter-review-tests.json",
+      "exit": 0,
+      "result": "43/43 passed"
+    },
+    {
+      "command": "npm run typecheck && npm run check:sdk && npm run format:check",
+      "exit": 0,
+      "result": "All passed; public SDK scan inspected 22 source files"
+    },
+    {
+      "command": "git diff --check --cached && git write-tree",
+      "exit": 0,
+      "result": "No whitespace errors; tree identity unchanged"
+    },
+    {
+      "command": "vitest run route.test.tsx --root /tmp/model-filter-review-probe --testNamePattern=\"never applies\" --reporter=json --outputFile=/tmp/model-filter-route-review.json",
+      "exit": 1,
+      "result": "1 targeted regression assertion failed, proving F01"
+    }
+  ],
+  "next_review_scope": "Recheck F01 against its named race and the legitimate routed editing/offline All/reset flows. Unchanged code does not need a fresh full-panel review. Evidence-only additions should retain this exact reviewed subject and clearly distinguish the final candidate."
+}
