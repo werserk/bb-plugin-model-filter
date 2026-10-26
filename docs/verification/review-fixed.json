@@ -1,6 +1,6 @@
 {
   "reviewer": "/root/final_review",
-  "review_skill_file": "/home/werserk/.agents/skills/change-review/SKILL.md",
+  "review_skill_file": "<local-skills>/change-review/SKILL.md",
   "verdict": "PASS",
   "subject": {
     "kind": "staged initial tree after F01 correction",

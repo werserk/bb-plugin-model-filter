@@ -56,7 +56,7 @@
     "format": "prettier --write \"*.{ts,tsx,css}\" \"scripts/**/*.mjs\" \"*.{md,json}\" \"skills/**/*.md\" \".github/**/*.yml\""
   },
   "private": true,
-  "license": "UNLICENSED",
+  "license": "MIT",
   "description": "Choose visible models in BB standard model pickers.",
   "files": [
     "dist/",
@@ -72,7 +72,8 @@
     "tsconfig.json",
     "LICENSE",
     "CHANGELOG.md",
-    "PLUGIN_OVERVIEW.md"
+    "PLUGIN_OVERVIEW.md",
+    "THIRD_PARTY_NOTICES.md"
   ],
   "repository": {
     "type": "git",

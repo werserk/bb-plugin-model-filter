@@ -22,12 +22,12 @@ If the adapter cannot identify a compatible query client, BB's full native choic
 
 ## Installation
 
-This is a private review repository. GitHub access is required; no npm release or Community marketplace listing is published. Use a supported Node.js version for BB 0.47.1: Node 22.19+, 24, or 26.
+Use a supported Node.js version for BB 0.47.1: Node 22.19+, 24, or 26. The Git release is the distribution source; no npm publication is required.
 
-Install from the repository with authenticated Git access on the BB server:
+Install the compatible Git release on the BB server:
 
 ```bash
-bb plugin install git:https://github.com/werserk/bb-plugin-model-filter.git@main
+bb plugin install git:https://github.com/werserk/bb-plugin-model-filter.git@^0.1.0
 ```
 
 For a local development checkout, follow the steps below.
@@ -132,4 +132,4 @@ See [architecture](docs/ARCHITECTURE.md), [implementation and acceptance](docs/i
 
 ## Repository and license
 
-The primary branch is `main`. Pull requests and pushes run the checks defined in [.github/workflows/ci.yml](.github/workflows/ci.yml). The private repository is available for owner review; it has no open-source license. See [LICENSE](LICENSE).
+The primary branch is `main`. Pull requests and pushes run the checks defined in [.github/workflows/ci.yml](.github/workflows/ci.yml). The plugin is distributed under the [MIT license](LICENSE); vendored and bundled code retains its [third-party notices](THIRD_PARTY_NOTICES.md).

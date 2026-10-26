@@ -37,4 +37,4 @@ Only {revision, providers} is persisted in the plugin's server SQLite database. 
 
 ## Repository distribution
 
-package.json records the private Git source; README.md owns authenticated Git installation and owner-review instructions. main is the primary branch. .github/workflows/ci.yml validates pushes and pull requests. Repository creation does not change the runtime, installed local source or preference database.
+THIRD_PARTY_NOTICES.md retains upstream notices for vendored UI and bundled dependencies. package.json records the Git source and MIT license; README.md owns tagged Git installation. main is the primary branch. .github/workflows/ci.yml validates pushes and pull requests. Community metadata is maintained in get-bb/marketplace; release0.1.0 uses the immutable v0.1.0 tag and ^0.1.0 tracking range. Release preparation does not change the runtime or preference database.

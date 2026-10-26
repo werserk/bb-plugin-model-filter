@@ -1,6 +1,6 @@
 # Product contract
 
-Status: the owner authorized design and implementation on 2026-10-26. Local installation and creation of a private GitHub review repository are authorized. Public release and marketplace submission remain outside scope.
+Status: the owner authorized design and implementation on 2026-10-26. Local installation and repository creation are complete. The owner requested Community submission after reviewing the repository. Release0.1.0 and public MIT distribution are prepared for the exact release approval required by the submission workflow.
 
 ## Accepted behavior
 

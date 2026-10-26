@@ -13,7 +13,7 @@ The original assumption that a BB-source extension was required was reopened at 
 - Domain, backend, settings and real TanStack observer tests; live application evidence in compatibility.md.
 - SDK scan, formatter, CI definition, English documentation, branding and cropped screenshots.
 
-Local package: bb-plugin-model-filter, version0.1.0, primary branch main. Installed as model-filter. Public publication remains outside authorization. Temporary verification selections are reset before handoff so the owner chooses his own favorites.
+Local package: bb-plugin-model-filter, version0.1.0, primary branch main. Installed as model-filter. Community submission is now requested; the exact public release is prepared for approval. Temporary verification selections are reset before handoff so the owner chooses his own favorites.
 
 Independent final review and final verification reports are recorded in verification/. Final review passed for tree9943f416b80631523907f9597888a8c2d8a989d5 with no open findings;45 tests, typecheck, SDK scan, format check and build passed. The two review receipts and final installed-UI capture are evidence-only additions after that reviewed subject. The original local acceptance did not exercise remote CI or physical clients. Current repository CI is reported on GitHub; physical-client coverage remains unverified.
 
@@ -24,3 +24,7 @@ Independent review of tree d7cd216e5effdda6d4b55594fa16c4d4fe11ba05 found F01: a
 ## Private repository preparation
 
 The owner requested a repository for review after accepting the local plugin. The repository target is werserk/bb-plugin-model-filter, private, with main as its primary branch. Repository metadata and install instructions were added; the implementation remains the previously reviewed code. No public release, npm publication, release tag or marketplace submission is included. Git history is scanned for secrets before push. GitHub Actions is the remote verification surface.
+
+## Community release preparation
+
+The owner requested BB Community submission after reviewing the private repository. The release candidate keeps the reviewed runtime unchanged, proposes the same MIT license as Chat Width, refreshes real screenshots to Community dimensions and sanitizes local evidence metadata in the current tree. Original verification files are preserved in private thread storage. Existing Git history is retained and still contains earlier non-secret technical locators. The submission metadata uses agents-and-providers, authorwerserk and Git range^0.1.0. Public visibility, push/tag, release and marketplacePR are governed by the exact approval required by submit-a-plugin.
