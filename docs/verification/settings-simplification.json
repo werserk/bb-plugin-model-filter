@@ -1,0 +1,85 @@
+{
+  "target": {
+    "bb": "0.47.1",
+    "sdk": "0.6.79",
+    "client": "local Chromium via Browser Automation"
+  },
+  "scope": "One editable model checklist and always-visible whole-catalog bulk actions. Private runtime adapter and persistence unchanged.",
+  "checks": [
+    {
+      "status": "checked",
+      "case": "No All models / Selected models mode buttons",
+      "evidence": "Installed settings DOM and settings.jpg"
+    },
+    {
+      "status": "checked",
+      "case": "Bulk clear during search",
+      "result": "Search 6.1 renders one Codex row; Deselect all reports 0 of 7; Apply disabled."
+    },
+    {
+      "status": "checked",
+      "case": "Bulk select during search",
+      "result": "Same search renders one row; Select all reports 7 of 7; Apply enabled."
+    },
+    {
+      "status": "checked",
+      "case": "Large real catalog, no prior mode switch",
+      "states": [
+        {
+          "action": "Deselect all",
+          "count": "opencode\n0 of 463 selected",
+          "checked": 0,
+          "applyDisabled": true
+        },
+        {
+          "action": "Select all",
+          "count": "opencode\n463 of 463 selected",
+          "checked": 463,
+          "applyDisabled": false
+        },
+        {
+          "action": "Uncheck one from full catalog",
+          "count": "opencode\n462 of 463 selected",
+          "checked": 462,
+          "applyDisabled": false
+        },
+        {
+          "action": "Discard",
+          "count": "opencode\n463 of 463 selected",
+          "checked": 463,
+          "applyDisabled": true
+        }
+      ]
+    },
+    {
+      "status": "checked",
+      "case": "Responsive bulk controls",
+      "result": "430px viewport; editor clientWidth and scrollWidth both 386; both buttons visible and enabled."
+    },
+    {
+      "status": "checked",
+      "case": "Preferences unchanged",
+      "result": "Initial and final snapshots are byte-identical, revision 9. No Apply, reset, inference or chat-model mutation was performed."
+    },
+    {
+      "status": "checked",
+      "case": "Automated settings contract",
+      "result": "7 UI tests pass, including 500-model search-independent bulk selection and legacy All rule editing with retained unavailable IDs. Both new cases failed against the prior implementation."
+    },
+    {
+      "status": "checked",
+      "case": "Complete local automated suite",
+      "command": "npm test -- --reporter=json --outputFile=/tmp/model-filter-ui-tests.json",
+      "result": "47 tests passed, zero failures."
+    }
+  ],
+  "screenshots": {
+    "settings": "media/settings.jpg",
+    "capture": "Real DPR2 Chromium JPEG; cropped only to the plugin settings section."
+  },
+  "limits": [
+    "No real OpenRouter account was required or exercised; the 500-model automated catalog and 463-model installed ACP catalog cover the bulk-selection scenario.",
+    "Empty selection is an editing draft; Apply still requires at least one available model.",
+    "Remote CI and public release remain pending release approval."
+  ]
+}

@@ -4,7 +4,7 @@
 
 Choose which models appear in BB's standard model pickers while keeping each picker's current model available.
 
-Open **Settings → Installed plugins → Model Filter** to edit a provider's model list. Providers start in **All models** mode. In **Selected models** mode, new model IDs stay hidden until you select them. A hidden model that is already current remains available to that picker, marked **(Current)**, with its native reasoning and session metadata.
+Open **Settings → Installed plugins → Model Filter** to edit a provider's model list. Every provider has one editable checklist with **Select all** and **Deselect all**. Providers keep their native lists until you apply a selection; new model IDs then stay hidden until you select them. A hidden model that is already current remains available to that picker, marked **(Current)**, with its native reasoning and session metadata.
 
 Preferences live in this plugin's SQLite database on the current BB server. Connected clients share the saved selection; independent BB servers have separate preferences. The plugin adds no external service or credential setting. Filtering affects picker choices, not provider authorization, billing, or model access through CLI/API calls.
 
@@ -60,9 +60,9 @@ For an installed checkout, `bb plugin dev` provides the rebuild/reload loop.
 
 ## Settings
 
-Choose a provider, switch to **Selected models**, select model IDs, and apply. Model labels are shown alongside their opaque IDs so aliases and identical labels remain distinct. An unavailable saved ID can remain in a selection when at least one selected model is currently available.
+Choose a provider, select model IDs, and apply. For a large catalog, use **Deselect all**, search for your favorites, and check just those models. **Select all** and **Deselect all** always affect the entire provider catalog, including rows hidden by search. Selecting all saves the current IDs explicitly, so future models stay hidden. At least one available model must be selected before applying.
 
-**All models** keeps the remembered selection. **Reset provider** removes one provider's rule; **Reset all providers** removes every rule. The **Enable model filtering** plugin setting restores native choices when disabled and keeps saved preferences for later.
+Model labels appear alongside their opaque IDs so aliases and identical labels remain distinct. An unavailable saved ID can remain alongside an available selected model. **Reset provider** removes one provider's rule and restores its native list, including future models; **Reset all providers** removes every rule. The **Enable model filtering** plugin setting restores native choices when disabled and keeps saved preferences for later.
 
 Each save checks the server revision. If another client saved first, the editor preserves your draft and offers the latest saved selection instead of overwriting it silently.
 

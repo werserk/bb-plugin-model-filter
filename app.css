@@ -127,13 +127,11 @@
   font-weight: 600;
   margin: 0;
 }
-.mf-mode {
+.mf-bulk {
   display: flex;
-  gap: 0.25rem;
-  align-self: flex-start;
-  border: 1px solid var(--border);
-  border-radius: 0.4rem;
-  padding: 0.15rem;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
 }
 .mf-checklist {
   max-height: 25rem;

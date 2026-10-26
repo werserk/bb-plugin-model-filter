@@ -5,10 +5,7 @@ import { Input } from "./components/ui/input";
 const emptyRule = { mode: "all" as const, modelIds: [] as string[] };
 function ModelChecklist({ model }: { model: SettingsModel }) {
   const {
-    providers,
-    catalog,
     loading,
-    error,
     draft,
     setDraft,
     query,
@@ -20,6 +17,13 @@ function ModelChecklist({ model }: { model: SettingsModel }) {
     unavailable,
     selectedAvailable,
   } = model;
+  const toggleModel = (id: string, checked: boolean) =>
+    setDraft({
+      mode: "selected",
+      modelIds: checked
+        ? [...new Set([...selected, id])]
+        : [...selected].filter((modelId) => modelId !== id),
+    });
   return (
     <>
       <Input
@@ -38,16 +42,9 @@ function ModelChecklist({ model }: { model: SettingsModel }) {
             <label className="mf-model" key={model.model}>
               <input
                 type="checkbox"
-                checked={draft.mode === "all" || selected.has(model.model)}
-                disabled={draft.mode === "all" || saving}
-                onChange={(e) =>
-                  setDraft({
-                    ...draft,
-                    modelIds: e.target.checked
-                      ? [...draft.modelIds, model.model]
-                      : draft.modelIds.filter((id) => id !== model.model),
-                  })
-                }
+                checked={selected.has(model.model)}
+                disabled={saving}
+                onChange={(e) => toggleModel(model.model, e.target.checked)}
               />
               <span>
                 <span>{model.displayName || model.model}</span>
@@ -64,12 +61,10 @@ function ModelChecklist({ model }: { model: SettingsModel }) {
           )}
         </div>
       )}
-      {draft.mode === "selected" && (
-        <p className="mf-muted mf-hint">
-          New models stay hidden until you select them. Other providers keep
-          their full lists until configured.
-        </p>
-      )}
+      <p className="mf-muted mf-hint">
+        After you apply a selection, new models stay hidden until you select
+        them. Other providers keep their full lists until configured.
+      </p>
       {unavailable.length > 0 && (
         <details>
           <summary>Unavailable selections ({unavailable.length})</summary>
@@ -79,12 +74,7 @@ function ModelChecklist({ model }: { model: SettingsModel }) {
                 type="checkbox"
                 checked
                 disabled={saving}
-                onChange={() =>
-                  setDraft({
-                    ...draft,
-                    modelIds: draft.modelIds.filter((model) => model !== id),
-                  })
-                }
+                onChange={() => toggleModel(id, false)}
               />
               <code>{id}</code>
             </label>
@@ -93,75 +83,45 @@ function ModelChecklist({ model }: { model: SettingsModel }) {
       )}
       {draft.mode === "selected" && !loading && selectedAvailable === 0 && (
         <p role="alert" className="mf-error">
-          Select at least one available model, or choose All models.
+          Select at least one available model before applying, or reset this
+          provider to restore its full list.
         </p>
       )}
     </>
   );
 }
 
-function VisibilityControls({ model }: { model: SettingsModel }) {
-  const { draft, setDraft, saving, loading, models } = model;
+function SelectionControls({ model }: { model: SettingsModel }) {
+  const { draft, setDraft, saving, loading, models, selected } = model;
   return (
-    <>
-      <div className="mf-mode" role="group" aria-label="Model visibility">
-        <Button
-          size="sm"
-          variant={draft.mode === "all" ? "secondary" : "ghost"}
-          aria-pressed={draft.mode === "all"}
-          onClick={() => setDraft({ ...draft, mode: "all" })}
-          disabled={saving}
-        >
-          All models
-        </Button>
-        <Button
-          size="sm"
-          variant={draft.mode === "selected" ? "secondary" : "ghost"}
-          aria-pressed={draft.mode === "selected"}
-          onClick={() =>
-            setDraft({
-              mode: "selected",
-              modelIds: draft.modelIds.length
-                ? draft.modelIds
-                : models.map((m) => m.model),
-            })
-          }
-          disabled={saving || loading}
-        >
-          Selected models
-        </Button>
-      </div>
-      {draft.mode === "selected" && (
-        <div className="mf-bulk">
-          <Button
-            size="sm"
-            variant="ghost"
-            disabled={saving || loading}
-            onClick={() =>
-              setDraft({
-                ...draft,
-                modelIds: [
-                  ...new Set([
-                    ...draft.modelIds,
-                    ...models.map((m) => m.model),
-                  ]),
-                ],
-              })
-            }
-          >
-            Select all
-          </Button>
-          <Button
-            size="sm"
-            variant="ghost"
-            disabled={saving || !draft.modelIds.length}
-            onClick={() => setDraft({ ...draft, modelIds: [] })}
-          >
-            Clear selection
-          </Button>
-        </div>
-      )}
-    </>
+    <div className="mf-bulk" role="group" aria-label="Model selection">
+      <Button
+        size="sm"
+        variant="outline"
+        disabled={saving || loading || models.length === 0}
+        onClick={() =>
+          setDraft({
+            mode: "selected",
+            modelIds: [
+              ...new Set([...draft.modelIds, ...models.map((m) => m.model)]),
+            ],
+          })
+        }
+      >
+        Select all
+      </Button>
+      <Button
+        size="sm"
+        variant="outline"
+        disabled={saving || loading || selected.size === 0}
+        onClick={() => setDraft({ mode: "selected", modelIds: [] })}
+      >
+        Deselect all
+      </Button>
+      <span className="mf-muted">
+        Entire catalog, including hidden search results
+      </span>
+    </div>
   );
 }
 
@@ -195,12 +155,10 @@ export function ModelCatalogEditor({ model }: { model: SettingsModel }) {
           {providers.find((p) => p.id === providerId)?.displayName ?? "Models"}
         </h3>
         <span className="mf-muted">
-          {draft.mode === "all"
-            ? `${models.length} models`
-            : `${selectedAvailable} of ${models.length} selected`}
+          {selectedAvailable} of {models.length} selected
         </span>
       </div>
-      <VisibilityControls model={model} />
+      <SelectionControls model={model} />
       <ModelChecklist model={model} />
       {conflict && (
         <div className="mf-warning" role="alert">

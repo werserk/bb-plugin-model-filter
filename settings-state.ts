@@ -140,7 +140,10 @@ function useCatalogSelection(
     [catalog],
   );
   const known = new Set(models.map((model) => model.model));
-  const selected = new Set(draft.modelIds);
+  const selected = new Set([
+    ...(draft.mode === "all" ? models.map((model) => model.model) : []),
+    ...draft.modelIds,
+  ]);
   const visible = models.filter((model) =>
     `${model.displayName} ${model.model}`
       .toLowerCase()

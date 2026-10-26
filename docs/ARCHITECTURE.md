@@ -15,9 +15,9 @@ spec.md owns accepted behavior and scope. README.md owns setup and user instruct
 | preferences-client.ts   | One frontend snapshot per client; reject stale revisions and expose sync/runtime status.                                                                                                                          |
 | app.tsx                 | Settings registration and hidden app-overlay lifecycle. Initial load and realtime reconnect re-fetch authoritative preferences; disable/unmount disposes the adapter.                                             |
 | query-bridge.ts         | The only private runtime boundary. Find the host query client from the plugin's own React mount; compose targeted observer selectors and placeholders; refresh existing/future observers; restore owned wrappers. |
-| settings-state.ts       | Catalog discovery/routing, drafts bound to provider IDs, explicit conflict recovery and settings mutations.                                                                                                       |
+| settings-state.ts       | Catalog discovery/routing, effective checkbox selection for native all rules, drafts bound to provider IDs, explicit conflict recovery and settings mutations.                                                    |
 | ModelFilterSettings.tsx | Provider navigation, source selection, reset confirmation and a local native picker preview.                                                                                                                      |
-| ModelCatalogEditor.tsx  | Model search, full-catalog checkboxes, unavailable IDs, bulk actions and Apply/Discard.                                                                                                                           |
+| ModelCatalogEditor.tsx  | One editable full-catalog checklist, search, unavailable IDs, always-visible whole-catalog bulk actions and Apply/Discard.                                                                                        |
 | components/ui, lib      | Minimal local Button/Input source and their supporting primitives.                                                                                                                                                |
 | scripts/check-sdk.mjs   | Scan imports/dependencies against the public SDK boundary; does not bless runtime introspection.                                                                                                                  |
 | skills/model-filter     | Narrow CLI usage instructions.                                                                                                                                                                                    |
@@ -34,6 +34,8 @@ This relies on private runtime behavior and is confined to BB 0.47.x, tested on 
 ## Storage and synchronization
 
 Only {revision, providers} is persisted in the plugin's server SQLite database. Saves validate a full routed catalog on the server and perform a final atomic revision check after asynchronous discovery. Post-commit realtime invalidation makes clients fetch the new snapshot; reconnect performs the same fetch. There is no new server or credential setting. All mode and resets avoid catalog dependence.
+
+The settings editor derives checked IDs for native all rules from the full loaded catalog and remembered IDs. Every edit converts that effective selection to explicit IDs; Select all snapshots the current catalog and Deselect all clears the draft. Search changes only rendered rows. Separate visibility-mode controls are retired because they hide useful bulk actions and duplicate the same checklist. The stored all/selected contract remains the owner of CLI and legacy compatibility; Reset provider restores native behavior in Settings without a schema migration.
 
 ## Repository distribution
 
